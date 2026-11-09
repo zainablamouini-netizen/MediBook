@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - MediBook</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" asp-controller="Home" asp-action="Index">
+            <span class="brand-mark" aria-hidden="true">m</span>
+            <span>MediBook</span>
+        </a>
+        <nav class="site-nav" aria-label="Navigation principale">
+            <a asp-controller="Home" asp-action="Index">Accueil</a>
+            <a class="is-active" aria-current="page" asp-controller="Medecins" asp-action="Index">Médecins</a>
+        </nav>
+    </header>
+    <main class="page-shell">
+        @RenderBody()
+    </main>
+</body>
+</html>

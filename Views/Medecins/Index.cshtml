@@ -1,0 +1,132 @@
+@model IEnumerable<WebApplication2.Models.Medecin>
+@{
+    ViewData["Title"] = "Médecins";
+    var doctors = Model.ToList();
+    var specialties = doctors
+        .Select(medecin => medecin.Specialite.Libelle)
+        .Distinct()
+        .OrderBy(libelle => libelle)
+        .ToList();
+}
+
+<section aria-labelledby="page-title">
+    <div class="directory-heading">
+        <div>
+            <p class="eyebrow">Votre parcours de soins</p>
+            <h1 id="page-title">Trouver un médecin</h1>
+            <p class="directory-intro">Consultez les praticiens et leurs spécialités pour préparer votre rendez-vous.</p>
+        </div>
+        <div class="total-count" aria-label="Nombre de médecins">
+            <strong>@doctors.Count</strong>
+            <span>médecin@(doctors.Count > 1 ? "s" : "")</span>
+        </div>
+    </div>
+
+    <section class="directory-tools" aria-label="Filtres des médecins">
+        <div class="field field-search">
+            <label for="doctor-search">Rechercher</label>
+            <input id="doctor-search" type="search" placeholder="Nom, spécialité ou cabinet" autocomplete="off" />
+        </div>
+        <div class="field field-specialty">
+            <label for="specialty-filter">Spécialité</label>
+            <select id="specialty-filter">
+                <option value="">Toutes les spécialités</option>
+                @foreach (var specialty in specialties)
+                {
+                    <option value="@specialty">@specialty</option>
+                }
+            </select>
+        </div>
+        <p class="result-count" id="result-count" aria-live="polite">@doctors.Count résultat@(doctors.Count > 1 ? "s" : "")</p>
+    </section>
+
+    <div class="table-scroll">
+        <table class="doctor-table">
+            <thead>
+                <tr>
+                    <th scope="col">Médecin</th>
+                    <th scope="col">Spécialité</th>
+                    <th scope="col">Cabinet</th>
+                    <th scope="col">Rendez-vous</th>
+                </tr>
+            </thead>
+            <tbody id="doctor-list">
+                @if (doctors.Count == 0)
+                {
+                    <tr class="empty-row">
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <strong>Aucun médecin pour le moment</strong>
+                                <span>Les praticiens apparaîtront ici une fois enregistrés.</span>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var medecin in doctors)
+                    {
+                        var initials = string.Concat(medecin.Prenom.Take(1), medecin.Nom.Take(1)).ToUpperInvariant();
+                        var searchText = $"{medecin.Nom} {medecin.Prenom} {medecin.Specialite.Libelle} {medecin.Cabinet}";
+                        <tr data-doctor-row data-search="@searchText" data-specialty="@medecin.Specialite.Libelle">
+                            <td>
+                                <div class="doctor-name">
+                                    <span class="doctor-initials" aria-hidden="true">@initials</span>
+                                    <span>
+                                        <strong>Dr @medecin.Prenom @medecin.Nom</strong>
+                                        <small>@medecin.Telephone</small>
+                                    </span>
+                                </div>
+                            </td>
+                            <td><span class="specialty-tag">@medecin.Specialite.Libelle</span></td>
+                            <td class="cabinet-name">@(string.IsNullOrWhiteSpace(medecin.Cabinet) ? "Non précisé" : medecin.Cabinet)</td>
+                            <td>
+                                <a class="appointment-link" asp-controller="RendezVous" asp-action="Create" asp-route-medecinId="@medecin.Id">
+                                    Prendre rendez-vous <span aria-hidden="true">&#8594;</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    <tr class="empty-row" id="no-results" hidden>
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <strong>Aucun résultat</strong>
+                                <span>Modifiez votre recherche ou choisissez une autre spécialité.</span>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@if (doctors.Count > 0)
+{
+    <script>
+        const searchInput = document.getElementById("doctor-search");
+        const specialtyFilter = document.getElementById("specialty-filter");
+        const doctorRows = [...document.querySelectorAll("[data-doctor-row]")];
+        const noResults = document.getElementById("no-results");
+        const resultCount = document.getElementById("result-count");
+
+        function filterDoctors() {
+            const query = searchInput.value.trim().toLocaleLowerCase("fr");
+            const specialty = specialtyFilter.value;
+            let visibleCount = 0;
+
+            for (const row of doctorRows) {
+                const matchesQuery = row.dataset.search.toLocaleLowerCase("fr").includes(query);
+                const matchesSpecialty = !specialty || row.dataset.specialty === specialty;
+                row.hidden = !matchesQuery || !matchesSpecialty;
+                visibleCount += row.hidden ? 0 : 1;
+            }
+
+            noResults.hidden = visibleCount > 0;
+            resultCount.textContent = `${visibleCount} résultat${visibleCount > 1 ? "s" : ""}`;
+        }
+
+        searchInput.addEventListener("input", filterDoctors);
+        specialtyFilter.addEventListener("change", filterDoctors);
+    </script>
+}

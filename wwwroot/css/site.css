@@ -1,0 +1,350 @@
+:root {
+    color-scheme: light;
+    --ink: #203634;
+    --muted: #647773;
+    --line: #dce5df;
+    --paper: #ffffff;
+    --canvas: #f3f6f2;
+    --teal: #17685f;
+    --teal-dark: #104c47;
+    --mint: #e5f2ec;
+    --coral: #d47a61;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: "Aptos", "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+}
+
+.site-header {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 0 max(24px, calc((100vw - 1120px) / 2));
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    background: var(--teal);
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.site-nav a {
+    padding: 8px 13px;
+    border-radius: 5px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a.is-active {
+    background: var(--mint);
+    color: var(--teal-dark);
+}
+
+.page-shell {
+    width: min(1120px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 54px 0 80px;
+}
+
+.directory-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: var(--coral);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.directory-heading h1 {
+    margin: 0;
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.directory-intro {
+    max-width: 560px;
+    margin: 12px 0 0;
+    color: var(--muted);
+}
+
+.total-count {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 9px 13px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .7);
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.total-count strong {
+    color: var(--teal-dark);
+    font-size: 19px;
+}
+
+.directory-tools {
+    display: flex;
+    align-items: end;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 7px 7px 0 0;
+    background: #f9fbf9;
+}
+
+.field {
+    display: grid;
+    gap: 6px;
+}
+
+.field-search {
+    width: min(390px, 55%);
+}
+
+.field label {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.field input,
+.field select {
+    min-height: 40px;
+    width: 100%;
+    padding: 8px 11px;
+    border: 1px solid #cbd8d1;
+    border-radius: 5px;
+    background: white;
+    color: var(--ink);
+    font: inherit;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: var(--teal);
+    outline: 3px solid rgba(23, 104, 95, .15);
+}
+
+.field-specialty {
+    width: min(240px, 35%);
+}
+
+.result-count {
+    margin: 0 0 10px auto;
+    color: var(--muted);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 0 0 7px 7px;
+    background: var(--paper);
+}
+
+.doctor-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.doctor-table th {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line);
+    background: #f9fbf9;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.doctor-table td {
+    padding: 15px 18px;
+    border-bottom: 1px solid #e8eeea;
+    vertical-align: middle;
+}
+
+.doctor-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.doctor-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 210px;
+}
+
+.doctor-initials {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--mint);
+    color: var(--teal-dark);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.doctor-name strong {
+    display: block;
+    font-size: 14px;
+}
+
+.doctor-name small {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.specialty-tag {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 4px;
+    background: #edf4ef;
+    color: #355d51;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.cabinet-name {
+    color: #425854;
+}
+
+.appointment-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    color: var(--teal-dark);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.appointment-link:hover {
+    background: var(--mint);
+}
+
+.empty-row td {
+    padding: 52px 20px;
+    text-align: center;
+}
+
+.empty-state strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.empty-state span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+@media (max-width: 700px) {
+    .site-header {
+        min-height: 62px;
+        padding: 0 20px;
+    }
+
+    .page-shell {
+        width: min(100% - 32px, 1120px);
+        padding-top: 34px;
+    }
+
+    .directory-heading {
+        align-items: start;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+
+    .directory-heading h1 {
+        font-size: 34px;
+    }
+
+    .directory-tools {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .field-search,
+    .field-specialty {
+        width: 100%;
+    }
+
+    .result-count {
+        margin: 0;
+    }
+}
